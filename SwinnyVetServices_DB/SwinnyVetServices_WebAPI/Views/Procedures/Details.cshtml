@@ -1,0 +1,90 @@
+﻿@model SwinnyVetServices_WebAPI.Models.Procedure
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Procedure</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.procedureDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.procedureDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.procedurePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.procedurePrice)
+        </dd>
+
+    </dl>
+    <table class="table">
+        <tr>
+            <th>
+                Treatment Id
+            </th>
+            <th>
+                Pet Name
+            </th>
+            <th>
+                Owner Name
+            </th>
+            <th>
+                Procedure Description
+            </th>
+            <th>
+                Treatment Date
+            </th>
+            <th>
+                Treatment Notes
+            </th>
+            <th>
+                Treatment Price
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Treatments)
+        {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.treatmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pet.petName)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner.ownerGivenName)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Procedure.procedureDescription)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.treatmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.treatmentNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.treatmentPrice)
+            </td>
+        </tr>
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.procedureId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

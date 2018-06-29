@@ -1,0 +1,66 @@
+﻿@model SwinnyVetServices_WebAPI.Models.Treatment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Treatment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.treatmentNotes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.treatmentNotes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.treatmentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.treatmentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.treatmentPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.treatmentPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.ownerSurname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner.ownerSurname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pet.petName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pet.petName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Procedure.procedureDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Procedure.procedureDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.treatmentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

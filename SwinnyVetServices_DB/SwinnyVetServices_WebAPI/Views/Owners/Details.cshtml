@@ -1,0 +1,42 @@
+﻿@model SwinnyVetServices_WebAPI.Models.Owner
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Owner</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ownerSurname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ownerSurname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ownerGivenName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ownerGivenName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ownerPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ownerPhone)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ownerId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

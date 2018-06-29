@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SwinnyVetServices_WebAPI.Models.Owner>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ownerSurname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ownerGivenName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ownerPhone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ownerSurname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ownerGivenName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ownerPhone)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ownerId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ownerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ownerId })
+        </td>
+    </tr>
+}
+
+</table>
