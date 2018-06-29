@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="ownerId" />
+          </Key>
+          <Property Name="ownerId" Type="int" Nullable="false" />
+          <Property Name="ownerSurname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ownerGivenName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ownerPhone" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pet">
+          <Key>
+            <PropertyRef Name="petId" />
+          </Key>
+          <Property Name="petId" Type="int" Nullable="false" />
+          <Property Name="petName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="petType" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ownerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Procedure">
+          <Key>
+            <PropertyRef Name="procedureId" />
+          </Key>
+          <Property Name="procedureId" Type="int" Nullable="false" />
+          <Property Name="procedureDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="procedurePrice" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Treatment">
+          <Key>
+            <PropertyRef Name="treatmentId" />
+          </Key>
+          <Property Name="treatmentId" Type="int" Nullable="false" />
+          <Property Name="treatmentNotes" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="treatmentDate" Type="date" Nullable="false" />
+          <Property Name="treatmentPrice" Type="money" Nullable="false" />
+          <Property Name="petId" Type="int" Nullable="false" />
+          <Property Name="ownerId" Type="int" Nullable="false" />
+          <Property Name="procedureId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_PetOwner">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="1" />
+          <End Role="Pet" Type="Self.Pet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="ownerId" />
+            </Principal>
+            <Dependent Role="Pet">
+              <PropertyRef Name="ownerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentOwner">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="ownerId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="ownerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentPet">
+          <End Role="Pet" Type="Self.Pet" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pet">
+              <PropertyRef Name="petId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="petId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentProcedure">
+          <End Role="Procedure" Type="Self.Procedure" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Procedure">
+              <PropertyRef Name="procedureId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="procedureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owner" EntityType="Self.Owner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pet" EntityType="Self.Pet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Procedure" EntityType="Self.Procedure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Treatment" EntityType="Self.Treatment" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PetOwner" Association="Self.FK_PetOwner">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Pet" EntitySet="Pet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentOwner" Association="Self.FK_TreatmentOwner">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Treatment" EntitySet="Treatment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentPet" Association="Self.FK_TreatmentPet">
+            <End Role="Pet" EntitySet="Pet" />
+            <End Role="Treatment" EntitySet="Treatment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentProcedure" Association="Self.FK_TreatmentProcedure">
+            <End Role="Procedure" EntitySet="Procedure" />
+            <End Role="Treatment" EntitySet="Treatment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="ownerId" />
+          </Key>
+          <Property Name="ownerId" Type="Int32" Nullable="false" />
+          <Property Name="ownerSurname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ownerGivenName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ownerPhone" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pets" Relationship="Self.FK_PetOwner" FromRole="Owner" ToRole="Pet" />
+          <NavigationProperty Name="Treatments" Relationship="Self.FK_TreatmentOwner" FromRole="Owner" ToRole="Treatment" />
+        </EntityType>
+        <EntityType Name="Pet">
+          <Key>
+            <PropertyRef Name="petId" />
+          </Key>
+          <Property Name="petId" Type="Int32" Nullable="false" />
+          <Property Name="petName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="petType" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ownerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Owner" Relationship="Self.FK_PetOwner" FromRole="Pet" ToRole="Owner" />
+          <NavigationProperty Name="Treatments" Relationship="Self.FK_TreatmentPet" FromRole="Pet" ToRole="Treatment" />
+        </EntityType>
+        <EntityType Name="Procedure">
+          <Key>
+            <PropertyRef Name="procedureId" />
+          </Key>
+          <Property Name="procedureId" Type="Int32" Nullable="false" />
+          <Property Name="procedureDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="procedurePrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Treatments" Relationship="Self.FK_TreatmentProcedure" FromRole="Procedure" ToRole="Treatment" />
+        </EntityType>
+        <EntityType Name="Treatment">
+          <Key>
+            <PropertyRef Name="treatmentId" />
+          </Key>
+          <Property Name="treatmentId" Type="Int32" Nullable="false" />
+          <Property Name="treatmentNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="treatmentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="treatmentPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="petId" Type="Int32" Nullable="false" />
+          <Property Name="ownerId" Type="Int32" Nullable="false" />
+          <Property Name="procedureId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Owner" Relationship="Self.FK_TreatmentOwner" FromRole="Treatment" ToRole="Owner" />
+          <NavigationProperty Name="Pet" Relationship="Self.FK_TreatmentPet" FromRole="Treatment" ToRole="Pet" />
+          <NavigationProperty Name="Procedure" Relationship="Self.FK_TreatmentProcedure" FromRole="Treatment" ToRole="Procedure" />
+        </EntityType>
+        <Association Name="FK_PetOwner">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="1" />
+          <End Role="Pet" Type="Self.Pet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="ownerId" />
+            </Principal>
+            <Dependent Role="Pet">
+              <PropertyRef Name="ownerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentOwner">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="ownerId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="ownerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentPet">
+          <End Role="Pet" Type="Self.Pet" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pet">
+              <PropertyRef Name="petId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="petId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TreatmentProcedure">
+          <End Role="Procedure" Type="Self.Procedure" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Procedure">
+              <PropertyRef Name="procedureId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="procedureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="svs_DatabseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
+          <EntitySet Name="Owners" EntityType="Self.Owner" />
+          <EntitySet Name="Pets" EntityType="Self.Pet" />
+          <EntitySet Name="Procedures" EntityType="Self.Procedure" />
+          <EntitySet Name="Treatments" EntityType="Self.Treatment" />
+          <AssociationSet Name="FK_PetOwner" Association="Self.FK_PetOwner">
+            <End Role="Owner" EntitySet="Owners" />
+            <End Role="Pet" EntitySet="Pets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentOwner" Association="Self.FK_TreatmentOwner">
+            <End Role="Owner" EntitySet="Owners" />
+            <End Role="Treatment" EntitySet="Treatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentPet" Association="Self.FK_TreatmentPet">
+            <End Role="Pet" EntitySet="Pets" />
+            <End Role="Treatment" EntitySet="Treatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentProcedure" Association="Self.FK_TreatmentProcedure">
+            <End Role="Procedure" EntitySet="Procedures" />
+            <End Role="Treatment" EntitySet="Treatments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="svs_DatabseEntities">
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="Model.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owners">
+            <EntityTypeMapping TypeName="Model.Owner">
+              <MappingFragment StoreEntitySet="Owner">
+                <ScalarProperty Name="ownerId" ColumnName="ownerId" />
+                <ScalarProperty Name="ownerSurname" ColumnName="ownerSurname" />
+                <ScalarProperty Name="ownerGivenName" ColumnName="ownerGivenName" />
+                <ScalarProperty Name="ownerPhone" ColumnName="ownerPhone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pets">
+            <EntityTypeMapping TypeName="Model.Pet">
+              <MappingFragment StoreEntitySet="Pet">
+                <ScalarProperty Name="petId" ColumnName="petId" />
+                <ScalarProperty Name="petName" ColumnName="petName" />
+                <ScalarProperty Name="petType" ColumnName="petType" />
+                <ScalarProperty Name="ownerId" ColumnName="ownerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Procedures">
+            <EntityTypeMapping TypeName="Model.Procedure">
+              <MappingFragment StoreEntitySet="Procedure">
+                <ScalarProperty Name="procedureId" ColumnName="procedureId" />
+                <ScalarProperty Name="procedureDescription" ColumnName="procedureDescription" />
+                <ScalarProperty Name="procedurePrice" ColumnName="procedurePrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Treatments">
+            <EntityTypeMapping TypeName="Model.Treatment">
+              <MappingFragment StoreEntitySet="Treatment">
+                <ScalarProperty Name="treatmentId" ColumnName="treatmentId" />
+                <ScalarProperty Name="treatmentNotes" ColumnName="treatmentNotes" />
+                <ScalarProperty Name="treatmentDate" ColumnName="treatmentDate" />
+                <ScalarProperty Name="treatmentPrice" ColumnName="treatmentPrice" />
+                <ScalarProperty Name="petId" ColumnName="petId" />
+                <ScalarProperty Name="ownerId" ColumnName="ownerId" />
+                <ScalarProperty Name="procedureId" ColumnName="procedureId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
