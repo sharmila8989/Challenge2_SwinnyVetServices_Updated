@@ -11,6 +11,7 @@ namespace SwinnyVetServices_WebAPI.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Owner
     {
@@ -20,10 +21,22 @@ namespace SwinnyVetServices_WebAPI.Models
             this.Pets = new HashSet<Pet>();
             this.Treatments = new HashSet<Treatment>();
         }
-    
+        [Display(Name = "Owner Id")]
+        [Required()]
         public int ownerId { get; set; }
+
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        [Display(Name ="Owner Surname")]
+        [Required()]
+        [StringLength(30)]
         public string ownerSurname { get; set; }
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        [Display(Name = "Owner GivenName")]
+        [Required()]
+        [StringLength(30)]
         public string ownerGivenName { get; set; }
+        [Display(Name = "Owner PhoneNumber")]
+        [Required()]
         public int ownerPhone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

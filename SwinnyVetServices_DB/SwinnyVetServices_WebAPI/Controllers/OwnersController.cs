@@ -48,12 +48,21 @@ namespace SwinnyVetServices_WebAPI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ownerId,ownerSurname,ownerGivenName,ownerPhone")] Owner owner)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Owners.Add(owner);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Owners.Add(owner);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+            catch (DataException)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+
 
             return View(owner);
         }
@@ -70,6 +79,7 @@ namespace SwinnyVetServices_WebAPI.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(owner);
         }
 
